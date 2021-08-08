@@ -11,6 +11,26 @@ module AresMUSH
     end
  
     def self.get_cmd_handler(client, cmd, enactor)      
+      case cmd.root
+        when "check"
+          case cmd.switch
+          when "pools"
+            return CheckPoolsCmd
+          when "luck"
+            return CheckLuckCmd
+          when "xp"
+            return CheckXPCmd
+          when nil
+            return CheckPoolsCmd 
+          end
+        when "luck"
+          case cmd.switch
+          when "xp"
+            return LuckXPCmd
+          end 
+        when "dotcount"
+          return DotcountCmd
+        end
       return nil
     end
   end
