@@ -8,8 +8,8 @@ module AresMUSH
     end
 
     def self.shortcuts
-      Global.read_config("location", "action", "thing", "cue")
-    end
+      {}
+	  end
 
     def self.get_cmd_handler(client, cmd, enactor)
 	  case cmd.root
@@ -19,12 +19,15 @@ module AresMUSH
     end
 
     def self.get_event_handler(event_name)
-      nil
+	  nil
     end
 
     def self.get_web_request_handler(request)
-      nil
+      case request.cmd
+	  when "portalscene"
+	    return PortalsceneRequestHandler
+      end
+	  return nil
     end
-
   end
 end
