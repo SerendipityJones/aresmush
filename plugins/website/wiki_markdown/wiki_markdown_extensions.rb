@@ -17,7 +17,9 @@ module AresMUSH
           WikidotHtml,
           SpeechBracketExtension,
           StartPreBlockMarkdownExtension,
-          EndPreBlockMarkdownExtension
+          EndPreBlockMarkdownExtension,
+		  MoodpicMarkdownExtension,
+		  SpellpicMarkdownExtension
         ]
       end
       
