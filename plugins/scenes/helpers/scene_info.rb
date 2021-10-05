@@ -85,7 +85,7 @@ module AresMUSH
       area = nil
       vistas = {}
       details = {}
-      
+
       if (matched_rooms.count == 1)
         room = matched_rooms.first
         if (room.is_temp_room?)
@@ -97,7 +97,18 @@ module AresMUSH
           details = room.details
         end
       else
-        description = location
+        exact_room = location.split("/")
+        exact_match = matched_rooms.select {|r| r.name == exact_room[1]}
+
+        if (exact_match.count == 1)
+          room = exact_match.first
+          description = "%xh#{room.name}%xn%R#{room.description}"
+          area = room.area
+          vistas = room.vistas
+          details = room.details
+        else
+          description = location
+        end
       end
       
       scene.update(location: location)

@@ -59,7 +59,9 @@ module AresMUSH
            :roll2 => self.roll_str2,
            :dice1 => FS3Skills.print_dice(die_result1),
            :dice2 => FS3Skills.print_dice(die_result2),
-           :result => results)  
+           :result => results,
+           :roller => enactor.name
+           )  
           
         FS3Skills.emit_results message, client, enactor_room, self.private_roll
       end
