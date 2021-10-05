@@ -12,7 +12,7 @@ module AresMUSH
       
     	return nil if !Achievements.is_enabled?
     	
-        name = 'fs3_luck_spent'  
+        name = 'scene_participant_event'  
     	
     	achievement_details = Achievements.achievement_data(name) 
     	if (!achievement_details)
