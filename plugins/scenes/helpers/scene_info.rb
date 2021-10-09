@@ -97,7 +97,7 @@ module AresMUSH
           details = room.details
         end
       else
-        exact_room = location.split("/")
+        exact_room = location.to_s.split("/")
         exact_match = matched_rooms.select {|r| r.name == exact_room[1]}
 
         if (exact_match.count == 1)
