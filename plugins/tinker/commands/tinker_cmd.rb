@@ -32,8 +32,8 @@ module AresMUSH
     		c.achievements.each do |achievement|
     			if (achievement.name == name)
     				Global.logger.info "Updating #{name} achievement for #{c.name}."
-    				achievement.delete
     				message = message % { count: count }
+    				achievement.delete
     				achievement = Achievement.create(character: c, type: type, name: name, message: message, count: count)
     				client.emit "Updated #{name} achievement for #{c.name}."
     			end

@@ -2,9 +2,9 @@
 toc: 4 - Writing the Story
 summary: Portal scene prompts.
 aliases:
-- portal
 - portal_scene
 - portal_prompt
+- inspiration
 ---
 #PortalScene
 

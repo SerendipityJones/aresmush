@@ -18,7 +18,8 @@ module AresMUSH
           SpeechBracketExtension,
           StartPreBlockMarkdownExtension,
           EndPreBlockMarkdownExtension,
-		  MoodpicMarkdownExtension
+          MoodpicMarkdownExtension,
+          SpellpicMarkdownExtension
         ]
       end
       
