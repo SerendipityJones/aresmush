@@ -18,15 +18,16 @@ module AresMUSH
           SpeechBracketExtension,
           StartPreBlockMarkdownExtension,
           EndPreBlockMarkdownExtension,
-		  MoodpicMarkdownExtension,
-		  SpellpicMarkdownExtension
+          MoodpicMarkdownExtension,
+          SpellpicMarkdownExtension,
+		  ActiveCheckMarkdownExtension
         ]
       end
       
       def self.postprocess_tags
         [
           # Most of these are post tags because otherwise the text inside them ends up 
-          # beng marked as HTML instead of markdown.
+          # being marked as HTML instead of markdown.
           
           WikidotItalics,
           CharacterGalleryMarkdownExtension,
