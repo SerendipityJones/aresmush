@@ -1,7 +1,7 @@
 module AresMUSH
   module Website
     class ActiveCheckMarkdownExtension
-	  include CommandHandler
+          include CommandHandler
 
       def self.regex
         /\[\[activecheck (\w*)\]\]/i
@@ -10,11 +10,15 @@ module AresMUSH
        def self.parse(matches)
         input = matches[1]
         return "" if !input
-        
+
         charname = input.downcase.strip
-        
-        Character.find_one_by_name(charname).select { |c| c.idle_state != nil && c.is_approved?} ? "active" : "inactive"
-      
+
+        char = Character.find_one_by_name(charname)
+
+        return if char.nil?
+
+        char.idle_state.nil? && char.is_approved? ? "active" : "inactive"
+
       end
     end
   end
