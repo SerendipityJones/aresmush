@@ -3,29 +3,35 @@
 <%= section_line t('fs3skills.attributes_title') -%>
 <% attrs.each do |a| -%>
 <%= a -%>
-<% end %> 
+<% end %>
 
 
 <%= section_line t('fs3skills.action_skills_title') -%>
 <% action_skills.each do |a| -%>
 <%= a -%>
-<% end %> 
+<% end %>
 
 <% if specialties %>
 
 %xh<%= t('fs3skills.specialties_title') %>%xn <%= specialties %>
 <% end %>
 
+<%= section_line t('fs3skills.magic_skills_title') -%>
+<% magic_skills.each do |a| -%>
+<%= a -%>
+<% end %>
+
+
 <%= section_line t('fs3skills.background_skills_title') -%>
 <% background_skills.each do |b| -%>
 <%= b -%>
-<% end %> 
+<% end %>
 
 
 <%= section_line t('fs3skills.languages_title') -%>
 <% languages.each do |l| -%>
 <%= l -%>
-<% end %> 
+<% end %>
 
 <% if use_advantages %>
 
