@@ -6,19 +6,19 @@ module AresMUSH
     def self.plugin_dir
       File.dirname(__FILE__)
     end
- 
+
     def self.shortcuts
       Global.read_config("channels", "shortcuts")
     end
- 
-    def self.get_cmd_handler(client, cmd, enactor)      
+
+    def self.get_cmd_handler(client, cmd, enactor)
       case cmd.root
       when "channel"
         case cmd.switch
         when "addchar"
           return ChannelForceJoinCmd
         when "alias"
-          return ChannelAliasCmd 
+          return ChannelAliasCmd
         when "announce"
           return ChannelAnnounceCmd
         when "clear"
@@ -61,20 +61,22 @@ module AresMUSH
           return ChannelShowTitlesCmd
         when "who"
           return ChannelWhoCmd
+        when "handles"
+          return ChannelHandleCmd
         end
       else
         if (cmd.root_is?("chat") && !cmd.args)
           return ChannelListCmd
         end
-        
+
         if (Channels.is_talk_cmd(enactor, cmd))
           return ChannelTalkCmd
         end
       end
-      return nil   
+      return nil
     end
 
-    def self.get_event_handler(event_name) 
+    def self.get_event_handler(event_name)
       case event_name
       when "CharCreatedEvent"
         return CharCreatedEventHandler
@@ -93,7 +95,7 @@ module AresMUSH
       end
       nil
     end
-    
+
     def self.get_web_request_handler(request)
       case request.cmd
       when "chat"

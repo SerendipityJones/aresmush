@@ -22,17 +22,17 @@ en:
         announce_disabled: "You will no longer see connection messages on %{name}."
         channels: Channels
         channels_title: "Channel                  Aliases         Description"
-        channel_who: "On channel %{name}: %{chars}." 
+        channel_who: "On channel %{name}: %{chars}."
         channel_aliases: "(+) = channel on     (X) = channel muted     (-) = channel off"
         unable_to_determine_auto_alias: "Could not automatically pick an alias for this channel due to name conflicts.  Use channel/join <name>=<alias> to pick one yourself."
-        
+
         joined_channel: "%{name} has joined this channel."
         already_on_channel: "You are already on that channel."
         not_on_channel: "You are not on that channel."
         left_channel: "%{name} has left this channel."
         has_disconnected: "%{name} has disconnected."
         has_connected: "%{name} has connected."
-        
+
         channel_muted: "Channel %{name} is now muted."
         channel_unmuted: "Channel %{name} is no longer muted."
         muted: " (muted)"
@@ -41,10 +41,10 @@ en:
         recall_history: "Chat History For %{name}"
         invalid_recall_limit: "Please specify a number between 1 and 50."
         recall_not_enabled: "Recall is not enabled on that channel."
-        
+
         channel_titles_enabled: "You will now see channel titles on %{name}."
         channel_titles_disabled: "You will no longer see channel titles on %{name}."
-        
+
         invalid_alias: "%{a} is an invalid alias."
         alias_in_use: "The alias %{channel_alias} is already in use for another channel."
         channel_alias_hint: "%{alias} <msg>"
@@ -55,23 +55,25 @@ en:
         channel_command_hint: "Type 'channels' to see the commands to talk on different channels."
         cant_use_channel: "You do not have permission to use that channel."
         did_you_mean_page: "It looks like you're trying to do a page but used the channel command accidentally."
-        
+
         channel_reported_body: "%{reporter} has reported the following conversation on the %{name} channel.%R%RReason:%R"
         channel_reported_title: "Channel Reported"
         channel_reported: "Thank you.  A report has been created using the channel log as evidence."
-        
+
         char_added_to_channel: "You add %{char} to channel %{channel}."
         char_removed_from_channel: "You remove %{char} from channel %{channel}."
         force_added: "You have been added to channel %{channel} by %{char}."
         force_removed: "You have been removed from channel %{channel} by %{char}."
-        
+
         more_on_portal: "Full channel history is available on the web portal."
-        
+
         everyone: Everyone
         can_join_title: "Can Join:"
         can_talk_title: "Can Talk:"
         announce_logins_title: "Announce Logins:"
         cant_talk_on_channel: "You aren't allowed to talk on that channel."
-        
+
         channel_recall_cleared: "You clear the channel buffer on %{channel}."
         name_required: "Channel name is required."
+
+        channel_handles_mode_set: "Handles in channel chat have been turned %{option}."

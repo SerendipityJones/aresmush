@@ -117,9 +117,12 @@ module AresMUSH
     end
 
     def self.pose_to_channel(channel, enactor, msg, title)
-# Remove handles from channel messages      
-#      name = enactor.ooc_name
-      name = enactor.name
+# Make handles on channel messages optional
+      if (enactor.channel_handles)
+        name = enactor.ooc_name
+      else
+        name = enactor.name
+      end
       formatted_msg = PoseFormatter.format(name, msg)
       Channels.emit_to_channel channel, formatted_msg, enactor, title
       Channels.notify_discord_webhook(channel, msg, enactor)
