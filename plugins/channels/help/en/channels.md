@@ -41,6 +41,7 @@ You can talk on a channel using the full channel name followed by the message.  
 `channel/title <channel>=<title>` - Sets a channel-specific title to show up in front of your name.
 `channel/showtitles <channel>=<on or off>` - Enables or disables other peoples' channel titles. (Only works when on a MU Client; web portal channels always show titles.)
 `channel/color <channel>=<ansi prefix>` - Sets a channel's display color. Use full ansi code(s) not just the color name.  For example: \%xc  You can use multiple codes.  For example:  \%xh\%xr
+`channel/handles <on/off>` - Sets whether you see Ares handles in channel chat. They will still appear everywhere else.
 
 ## Reporting Abuse
 
