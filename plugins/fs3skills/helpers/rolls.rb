@@ -12,7 +12,6 @@ module AresMUSH
       dice = FS3Skills.dice_to_roll_for_ability(char, roll_params)
       roll = FS3Skills.roll_dice(dice)
       Global.logger.info "#{char.name} rolling #{roll_params} dice=#{dice} result=#{roll}"
-Global.logger.info "It is at least loading."
       Achievements.award_achievement(char, "fs3_roll")
       roll
     end
@@ -148,8 +147,8 @@ Global.logger.info "It is at least loading."
         success_title = FS3Skills.get_success_title(roll_result)
         message = t('fs3skills.simple_roll_result',
 #          :name => char ? char.name : "#{pc_name} (#{enactor.name})",
-          :bane => char ? char.name : "#{pc_name}",
-         :roll => pc_skill,
+          :name => char ? char.name : "#{pc_name}",
+          :roll => pc_skill,
           :dice => FS3Skills.print_dice(roll),
           :success => success_title,
           :roller => enactor.name
