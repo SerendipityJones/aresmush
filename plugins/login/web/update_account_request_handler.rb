@@ -7,8 +7,8 @@ module AresMUSH
         email = request.args[:email]
         timezone = request.args[:timezone]
         pw = request.args[:confirm_password]
-        unified_play_screen = request.args[:unified_play_screen]
-        channel_handles = request.args[:channel_handles]
+        unified_play_screen = (request.args[:unified_play_screen] || "").to_bool
+        channel_handles = (request.args[:channel_handles] || "").to_bool
 
         error = Website.check_login(request)
         return error if error
@@ -48,7 +48,7 @@ module AresMUSH
         enactor.update(unified_play_screen: unified_play_screen)
         #add in channel_handles
         enactor.update(channel_handles: channel_handles)
-        
+
         {
         }
       end

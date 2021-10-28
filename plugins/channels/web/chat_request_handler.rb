@@ -3,17 +3,17 @@ module AresMUSH
     class ChatRequestHandler
       def handle(request)
         enactor = request.enactor
-        
+
         error = Website.check_login(request)
         return error if error
-                
+
         channels = []
         alts = []
-        
+
         Channel.all.to_a.each do |c|
           channels <<  Channels.build_channel_web_data(c, enactor, true)
         end
-        
+
         AresCentral.play_screen_alts(enactor).each do |char|
           char.page_threads
              .to_a
@@ -22,7 +22,7 @@ module AresMUSH
                  channels << Page.build_page_web_data(t, enactor, true)
                end
           end
-          
+
           alts <<  { id: char.id, name: char.name, icon: Website.icon_for_char(char) }
         end
 
@@ -31,11 +31,9 @@ module AresMUSH
         {
           channels: channels,
           pose_chars: alts
-        }                 
-        
+        }
+
       end
     end
   end
 end
-
-
