@@ -101,7 +101,8 @@ module AresMUSH
       end
 
       def format_skill(s, i, show_linked_attr = false)
-        name = "%xh#{s.name}:%xn"
+#       Set name for ASL to specifically be that, dammit
+        name = s.name == 'Asl' ? "%xhASL:%xn" : "%xh#{s.name}:%xn"
         linked_attr = show_linked_attr ? print_linked_attr(s) : ""
         linebreak = i % 2 == 1 ? "" : "%r"
         rating_text = "#{s.rating_name}#{linked_attr}"
