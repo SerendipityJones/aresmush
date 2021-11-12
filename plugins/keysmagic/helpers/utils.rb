@@ -37,7 +37,7 @@ module AresMUSH
     def self.is_category?(candidate)
       verdict = false
       if KeysMagic.categories.include?(Array(candidate).join)
-        verdict = candidate.titlecase
+        verdict = Array(candidate).join.titlecase
       end
       return verdict
     end
@@ -158,7 +158,7 @@ module AresMUSH
               everybody[cat][spell].sort!
             end
           end
-        end  
+        end
       end
       everybody
     end
