@@ -9,3 +9,5 @@ Luck Points in FS3 can be used to generate various lucky breaks.
 > Learn how the FS3 skills system works in the [FS3 Tutorial](/help/fs3).
 
 `luck/spend <reason>` - Spends luck outside of combat. See [Combat Luck](/help/combat) for combat-related luck commands.
+`luck/xp` - Spends 5 luck to buy 1 XP.
+`luck/check` - Tells you how many luck points you have.

@@ -1,0 +1,9 @@
+%lh
+%xh<%= center(header, 80)%>%xn
+<% categories.each do |cat| -%>
+<%= section_line cat %>
+<% spells(cat).each do |s| %>
+<%= s %>
+<% end %>
+<% end %>
+%lf

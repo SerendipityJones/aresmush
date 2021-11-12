@@ -7,3 +7,4 @@ This command shows you in brief how much XP or Luck you currently have available
 
 `check/luck` - Shows you how much Luck you have.
 `check/xp` - Shows you how much XP you have.
+`check/pools` or `check`  - Shows you how much of each you have.

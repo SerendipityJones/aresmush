@@ -17,3 +17,6 @@ Experience Points (XP) are gained periodically to reflect what your character ha
 
 > **Tip:** If you ever mess up an XP spend, like by typing the wrong skill name, an admin can help you reset it.
 
+
+`luck/xp` - Spends 5 luck to buy 1 XP.
+`xp/check` - Tells you how many XP you have.

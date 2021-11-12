@@ -8,7 +8,7 @@ module AresMUSH
         @char = char
         @client = client
         super File.dirname(__FILE__) + "/sheet.erb"
-        @magic_list = ["Chaos", "Elemental", "Heart", "Law", "Life", "Sight"]
+        @magic_list = KeysMagic.catlist
       end
 
       def approval_status

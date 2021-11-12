@@ -1,3 +1,23 @@
 ---
 en:
-  keysmagic: {}
+  keysmagic:
+    slash_for_equals: "That's not a spell and aspect. Did you use a '/' where you wanted a '='?"
+    no_such_spell: "That spell doesn't seem to exist. Yet, anyway."
+    too_many_aspects: "%{spell} has multiple aspect options; please specify which one you want."
+    does_not_exist: "%{spell} does not exist for the %{category} aspect."
+    you_know_spell: "You already know the %{spell} spell."
+    they_know_spell: "%{name} already knows the %{spell} spell."
+    you_cannot_learn: "You don't know enough %{category} to learn %{spell} right now."
+    they_cannot_learn: "%{name} doesn't know enough %{category} to learn %{spell} right now."
+    your_spell_added: "Your %{category} spells now include %{spell}."
+    their_spell_added: "%{name}'s %{category} spells now include %{spell}."
+
+    does_not_know_spell: "%{name} does not know %{spell}, so it cannot be removed."
+    their_spell_removed: "The %{spell} spell has been removed from %{name}."
+
+    spell_added_job_title: "Spell Added - %{name}"
+    spell_added_job: "%{name} has added the %{spell} spell to %{pronoun} %{category} aspect."
+    spell_removed_job_title: "Spell Removed - %{name}"
+    spell_removed_job: "%{name} removed the %{spell} spell from %{pronoun} %{category} aspect."
+
+    dunno_what_you_want_from_me: "spell/scan only works alone, with an aspect, or with a spell."

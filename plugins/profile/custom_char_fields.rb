@@ -1,27 +1,27 @@
 module AresMUSH
   module Profile
     class CustomCharFields
-      
+
       # Gets custom fields for display in a character profile.
       #
       # @param [Character] char - The character being requested.
       # @param [Character] viewer - The character viewing the profile. May be nil if someone is viewing
       #    the profile without being logged in.
       #
-      # @return [Hash] - A hash containing custom fields and values. 
+      # @return [Hash] - A hash containing custom fields and values.
       #    Ansi or markdown text strings must be formatted for display.
       # @example
       #    return { goals: Website.format_markdown_for_html(char.goals) }
       def self.get_fields_for_viewing(char, viewer)
-        return {}
+        return {spells: KeysMagic.char_spells(char.name)}
       end
-    
+
       # Gets custom fields for the character profile editor.
       #
       # @param [Character] char - The character being requested.
       # @param [Character] viewer - The character editing the profile.
       #
-      # @return [Hash] - A hash containing custom fields and values. 
+      # @return [Hash] - A hash containing custom fields and values.
       #    Multi-line text strings must be formatted for editing.
       # @example
       #    return { goals: Website.format_input_for_html(char.goals) }
@@ -33,14 +33,14 @@ module AresMUSH
       #
       # @param [Character] char - The character being requested.
       #
-      # @return [Hash] - A hash containing custom fields and values. 
+      # @return [Hash] - A hash containing custom fields and values.
       #    Multi-line text strings must be formatted for editing.
       # @example
       #    return { goals: Website.format_input_for_html(char.goals) }
       def self.get_fields_for_chargen(char)
         return {}
       end
-      
+
       # Saves fields from profile editing.
       #
       # @param [Character] char - The character being updated.
@@ -54,7 +54,7 @@ module AresMUSH
       def self.save_fields_from_profile_edit(char, char_data)
         return []
       end
-      
+
       # Saves fields from character creation (chargen).
       #
       # @param [Character] char - The character being updated.
@@ -68,7 +68,7 @@ module AresMUSH
       def self.save_fields_from_chargen(char, chargen_data)
         return []
       end
-      
+
     end
   end
 end
