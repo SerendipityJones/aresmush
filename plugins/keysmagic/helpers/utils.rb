@@ -43,7 +43,8 @@ module AresMUSH
     end
 
     def self.get_category(spell)
-      return KeysMagic.spells[spell]["category"]
+      the_spell = is_spell?(spell)
+      return KeysMagic.spells[the_spell]["category"]
     end
 
     def self.category_spells(category)

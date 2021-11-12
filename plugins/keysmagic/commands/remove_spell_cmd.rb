@@ -32,13 +32,12 @@ module AresMUSH
           if charspells.find {|cat, spell| spell.include?(is_spell)}
             known = true
           end
-          Global.logger.info "known? #{known}"
           unless known
             client.emit_failure t('keysmagic.does_not_know_spell', :name => name, :spell => self.spell)
             return
           else
-            category = KeysMagic.spells[spell]['category']
-            charspells[category[0]].delete(spell)
+            category = KeysMagic.spells[is_spell]['category']
+            charspells[category[0]].delete(is_spell)
             model.update(spells: charspells)
             client.emit_success t('keysmagic.their_spell_removed', :name => name, :spell => self.spell)
           end

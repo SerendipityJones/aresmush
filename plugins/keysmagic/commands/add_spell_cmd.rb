@@ -33,9 +33,10 @@ module AresMUSH
           self.target = enactor_name
         end
         unless (self.category)
-          if KeysMagic.is_spell?(self.spell)
-            self.spell = spell
-            self.category = KeysMagic.get_category(spell)
+          this_spell = KeysMagic.is_spell?(self.spell)
+          if this_spell
+            self.spell = this_spell
+            self.category = KeysMagic.get_category(self.spell)
             return
           else
             self.category = "FAILED"
