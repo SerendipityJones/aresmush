@@ -131,7 +131,7 @@ module AresMUSH
       return char_spells if !char.spells
 
       char.spells.each { |cat, spells|
-        spells.each { |spell|          
+        spells.each { |spell|
           char_spells[cat][spell] = KeysMagic.spell_info(spell)
         }
       }
@@ -151,12 +151,14 @@ module AresMUSH
         end
       end
       allChars.each do |name, list|
-        list.each do |cat, spells|
-          spells.each do |spell|
-            everybody[cat][spell].to_a << name
-            everybody[cat][spell].sort!
+        unless list.nil?
+          list.each do |cat, spells|
+            spells.each do |spell|
+              everybody[cat][spell].to_a << name
+              everybody[cat][spell].sort!
+            end
           end
-        end
+        end  
       end
       everybody
     end
