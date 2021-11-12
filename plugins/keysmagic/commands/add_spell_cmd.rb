@@ -7,35 +7,33 @@ module AresMUSH
       attr_accessor :spell, :category, :target
 
       def parse_args
-        @killadd = false
+        @killcmd = false
         if (cmd.args =~ /=/ && cmd.args =~ /\//)
           args = cmd.parse_args(ArgParser.arg1_equals_arg2_slash_arg3)
           self.target = trim_arg(args.arg1)
-          self.spell = titlecase_arg(args.arg2)
+          self.spell = KeysMagic.is_spell?(args.arg2)
           self.category = Array(titlecase_arg(args.arg3))
         elsif (cmd.args =~ /=/)
           args = cmd.parse_args(ArgParser.arg1_equals_arg2)
           self.target = trim_arg(args.arg1)
-          self.spell = titlecase_arg(args.arg2)
+          self.spell = KeysMagic.is_spell?(args.arg2)
         elsif (cmd.args =~ /\//)
           args = cmd.parse_args(ArgParser.arg1_slash_arg2)
           self.target = enactor_name
-          self.spell = titlecase_arg(args.arg1)
+          self.spell = KeysMagic.is_spell?(args.arg1)
           self.category = Array(titlecase_arg(args.arg2))
           unless KeysMagic.is_category?(self.category)
-            @killadd = true
+            @killcmd = true
           end
         else
           self.target = enactor_name
-          self.spell = titlecase_arg(cmd.args)
+          self.spell = KeysMagic.is_spell?(cmd.args)
         end
         if self.target.downcase == enactor_name.downcase
           self.target = enactor_name
         end
         unless (self.category)
-          this_spell = KeysMagic.is_spell?(self.spell)
-          if this_spell
-            self.spell = this_spell
+          if self.spell
             self.category = KeysMagic.get_category(self.spell)
             return
           else
@@ -55,7 +53,7 @@ module AresMUSH
       end
 
       def handle
-        if (@killadd)
+        if (@killcmd)
             client.emit_failure t('keysmagic.slash_for_equals')
             return
         end
