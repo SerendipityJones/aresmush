@@ -8,6 +8,8 @@ These commands are used in the Keys magic system.
 `spells` - Shows you your own spell list.
 `spells <name>` - Shows you <name>'s spell list.
 
+`spellcount` - Shows you how many spells you know, and how many slots are open.
+
 `spells/all` - Shows you a list of all the spells, divided by aspect.
 
 `spell <spell>` - Shows you information about that spell.
