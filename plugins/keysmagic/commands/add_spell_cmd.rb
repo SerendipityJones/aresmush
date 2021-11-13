@@ -110,8 +110,7 @@ module AresMUSH
       end
 
       def can_learn?(char, category)
-        aspect = FS3Skills.find_ability(char, category)
-        spellcap = aspect.rating/2.floor
+        spellcap = KeysMagic.current_cap(char, category)
         spellsknown = char.spells[category].nil? ? 0 : char.spells[category].length
         if (spellsknown < spellcap)
           true

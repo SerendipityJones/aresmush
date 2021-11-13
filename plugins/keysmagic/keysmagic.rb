@@ -31,6 +31,8 @@ module AresMUSH
         else
           return SpellsKnownCmd
         end
+      when "spellcount"
+        return SpellcountCmd
       end
     end
 

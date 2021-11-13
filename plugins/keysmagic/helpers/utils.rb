@@ -139,6 +139,11 @@ module AresMUSH
       return char_spells
     end
 
+    def self.current_cap(char, category)
+      spellcap = FS3Skills.find_ability(char, category).rating/2.floor
+      return spellcap
+    end
+
     def self.spell_demographics
       allChars = Chargen.approved_chars
         .to_h { |c| [c.name, c.spells] }
