@@ -17,7 +17,6 @@ module AresMUSH
             spells[cat] = {}
             if model.spells.nil? || model.spells.empty?
               spells[cat]["known"] = 0
-              spells[cat]["available"] = 0
             else
               spells[cat]["known"] = model.spells[cat].nil? ? 0 : model.spells[cat].length
               spells[cat]["allowed"] = KeysMagic.current_cap(model, cat)
