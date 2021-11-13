@@ -19,9 +19,13 @@ module AresMUSH
               spells[cat]["known"] = 0
             else
               spells[cat]["known"] = model.spells[cat].nil? ? 0 : model.spells[cat].length
-              spells[cat]["allowed"] = KeysMagic.current_cap(model, cat)
-              spells[cat]["available"] = spells[cat]["allowed"] - spells[cat]["known"]
             end
+            if FS3Skills.find_ability(model, cat)
+              spells[cat]["allowed"] = KeysMagic.current_cap(model, cat)
+            else
+              spells[cat]["allowed"] = 0
+            end  
+            spells[cat]["available"] = spells[cat]["allowed"] - spells[cat]["known"]
             result += "\n" if i > 0
             result += "     %x179#{Array(cat).join.concat(':').ljust(10)}%xn #{spells[cat]["known"].to_s.gsub(/\b0\b/,"No")} spell#{spells[cat]["known"] == 1 ? '' : 's'} known; #{spells[cat]["available"].to_s.gsub(/\b0\b/,"no")} slot#{spells[cat]["available"] == 1 ? '' : 's'} open."
           end
