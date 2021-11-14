@@ -19,6 +19,7 @@ module AresMUSH
         roll = info["roll"]
         vs = "#{info["offense"]} vs #{info["defense"]}"
         fs3 = info["fs3"]
+        special = info["special"]
         result = "Roll: #{left(roll,42)} Aspect: #{left(category,22)} "
         if info["offense"] && fs3
           result += "\nvs:   #{left(vs,42)} FS3:    #{left(fs3,22)}"
@@ -26,6 +27,9 @@ module AresMUSH
           result += "\nvs:   #{left(vs,72)}"
         elsif info["fs3"]
           result += "\n#{left(' ',48)} FS3:  #{left(fs3,22)}"
+        end
+        if info["special"]
+          result += "\nNote: #{left(info["special"],72)}"
         end
         return result
       end

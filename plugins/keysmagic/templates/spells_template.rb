@@ -42,12 +42,16 @@ module AresMUSH
         roll = spell["roll"]
         vs_roll = spell["offense"] ? "#{spell["offense"]} vs #{spell["defense"]}" : ""
         fs3 = spell["fs3"] ? "#{spell["fs3"]}" : "No special attack"
+        special = spell["special"] ? spell["special"].split(";").join(";\n" << " "*25) : nil
         result = "#{left(name, 19)} Roll: #{left(roll, 19)}%x179|%xn FS3: #{left(fs3, 18)}"
-        if spell["special"]
+        if spell["anomaly"]
           result = "#{left(name, 19)} Roll: #{left(roll, 44)}"
         end
         if spell["offense"]
           result += "\n#{left(" ",20)}vs:   #{left(vs_roll, 53)}"
+        end
+        if spell["special"]
+          result += "\n#{left(" ",20)}Note: #{special}"
         end
         if i > 0
           result.prepend("#{"%x179·%xn"*78}\n")

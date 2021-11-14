@@ -79,7 +79,7 @@ module AresMUSH
           spellList[spell]["category"].each_with_index do |c, i|
             if i > 0
               roll += " & "
-              this_spell["special"] = true
+              this_spell["anomaly"] = true
             end
             if spellList[spell]["attribute"]
               roll += spellList[spell]["attribute"]
@@ -122,6 +122,10 @@ module AresMUSH
       #  build fs3
         if spellList[spell]["fs3"]
           this_spell["fs3"] = spellList[spell]["fs3"]
+        end
+
+        if spellList[spell]["special"]
+          this_spell["special"] = spellList[spell]["special"]
         end
         return this_spell
     end
