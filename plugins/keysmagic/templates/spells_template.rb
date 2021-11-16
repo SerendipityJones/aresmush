@@ -45,8 +45,17 @@ module AresMUSH
         special = spell["special"] ? spell["special"].split(";").join(";\n" << " "*25) : nil
         if s[0] == "Heal" && !special.nil?
           cap = FS3Skills.find_ability(@char, "Life").rating
-          special.gsub!("one time per Life dot","#{cap} time#{cap == 1 ? '' : 's'}")
-          Global.logger.info "Special: #{special}"
+          times = case cap
+          when 1
+            "once"
+          when 2
+            "twice"
+          when 3
+            "thrice"
+          else
+            cap.to_s << " times"
+          end
+          special.gsub!("one time per Life dot", "#{times}")
         end
         result = "#{left(name, 19)} Roll: #{left(roll, 19)}%x179|%xn FS3: #{left(fs3, 18)}"
         if spell["anomaly"]
