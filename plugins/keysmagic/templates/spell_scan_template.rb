@@ -47,7 +47,7 @@ module AresMUSH
       def format_spell(s, i)
         name = FS3Skills.special_names.has_key?(s[0]) ? "%x179#{FS3Skills.special_names[s[0]]}:%xn" : "%x179#{s[0]}:%xn"
         chars = s[1].join(', ')
-        "#{left(name, 19)} #{left(chars, 58)}"
+        "#{left(name, 19)} #{wrap(chars, 58, 20)}"
       end
 
       def section_line(title)
