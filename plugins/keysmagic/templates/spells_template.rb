@@ -57,12 +57,12 @@ module AresMUSH
           end
           special.gsub!("one time per Life dot", "#{times}")
         end
-        result = "#{left(name, 19)} Roll: #{left(roll, 19)}%x179|%xn FS3: #{left(fs3, 18)}"
+        result = "#{left(name, 19)} Roll: #{left(roll, 19)} %x179|%xn FS3: #{left(fs3, 25)}"
         if spell["anomaly"]
-          result = "#{left(name, 19)} Roll: #{left(roll, 44)}"
+          result = "#{left(name, 19)} Roll: #{left(roll, 52)}"
         end
         if spell["offense"]
-          result += "\n#{left(" ",20)}vs:   #{left(vs_roll, 53)}"
+          result += "\n#{left(" ",20)}vs:   #{left(vs_roll, 52)}"
         end
         if spell["special"]
           result += "\n#{left(" ",20)}Note: #{special}"
