@@ -45,3 +45,4 @@ killares
 # Game directory
 # -----------------------------
 /game/
+plugins/tinker/commands/tinker_cmd.rb
