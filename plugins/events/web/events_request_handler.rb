@@ -10,7 +10,7 @@ module AresMUSH
         events = Event.sorted_events.map { |e| {
           id: e.id,
           title: e.title,
-          category: e.category,
+#          category: e.category,
           organizer: {
             name: e.character.name,
             id: e.character.id,
