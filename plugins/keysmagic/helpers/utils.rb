@@ -44,7 +44,7 @@ module AresMUSH
 
     def self.get_category(spell)
       the_spell = is_spell?(spell)
-      return KeysMagic.spells[the_spell]["category"]
+      return the_spell ? KeysMagic.spells[the_spell]["category"] : false
     end
 
     def self.category_spells(category)
