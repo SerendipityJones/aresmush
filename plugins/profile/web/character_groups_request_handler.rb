@@ -83,7 +83,7 @@ module AresMUSH
                         icon: Website.icon_for_char(c)
                         }
                       }
-          other_chars = Character.all.select { |c| !c.is_approved? && (c.is_guest? || c.has_role?("builder")) }.sort_by { |c| c.name }.map { |c| {
+          other_chars = Character.all.select { |c| !c.is_approved? && (c.is_guest? || c.has_role?("builder")) || c.is_admin? }.sort_by { |c| c.name }.map { |c| {
                         name: c.name,
                         icon: Website.icon_for_char(c)
                         }
