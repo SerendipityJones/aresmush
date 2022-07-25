@@ -145,6 +145,12 @@ module AresMUSH
 
     def self.current_cap(char, category)
       spellcap = FS3Skills.find_ability(char, category).rating/2.floor
+      ability_name = 'Affinity ' + category
+      Global.logger.info "#{ability_name}"
+      bonus = FS3Skills.find_ability(char, ability_name)
+      bonus = bonus.nil? ? 0 : bonus.rating
+      Global.logger.info "#{bonus}"
+      spellcap = spellcap + bonus
       return spellcap
     end
 

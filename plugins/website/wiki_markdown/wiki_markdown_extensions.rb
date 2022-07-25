@@ -1,9 +1,9 @@
 module AresMUSH
-  
+
   module Website
-    
+
     module WikiMarkdownExtensions
-      
+
       def self.preprocess_tags
         [
           IncludeMarkdownExtension, # NOTE!!  Do includes first, otherwise any extensions inside them won't be expanded properly.
@@ -20,15 +20,16 @@ module AresMUSH
           EndPreBlockMarkdownExtension,
           MoodpicMarkdownExtension,
           SpellpicMarkdownExtension,
-		  ActiveCheckMarkdownExtension
+		      CalledMarkdownExtension,
+		      ActiveCheckMarkdownExtension
         ]
       end
-      
+
       def self.postprocess_tags
         [
-          # Most of these are post tags because otherwise the text inside them ends up 
+          # Most of these are post tags because otherwise the text inside them ends up
           # being marked as HTML instead of markdown.
-          
+
           WikidotItalics,
           CharacterGalleryMarkdownExtension,
           MusicPlayerMarkdownExtension,
@@ -48,11 +49,11 @@ module AresMUSH
           CreateWikiPageButton
         ]
       end
-      
+
       def self.is_dynamic_page?(page_text)
         page_text =~ /(\[\[scenelist)|(\[\[chargallery)|(\[\[pagelist)/i
       end
     end
-    
+
   end
 end

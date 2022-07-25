@@ -3,17 +3,17 @@ module AresMUSH
     class GetSidebarInfoRequestHandler
       def handle(request)
         enactor = request.enactor
-        
+
         error = Website.check_login(request, true)
         return error if error
-        
-        
+
+
         if (enactor && enactor.token_secs_remaining < (8 * 60 * 60) && enactor.token_secs_remaining > 0)
           token_expiry_warning = TimeFormatter.format(enactor.token_secs_remaining)
         else
           token_expiry_warning = nil
         end
-        
+
         if (enactor)
           notifications = enactor.unread_notifications.count
           if (enactor.handle)
@@ -40,7 +40,7 @@ module AresMUSH
           notifications = 0
           alt_data = nil
         end
-        
+
         {
           timestamp: Time.now.getutc,
           game: GetGameInfoRequestHandler.new.handle(request),
@@ -57,7 +57,8 @@ module AresMUSH
           token_expiry_warning: token_expiry_warning,
           motd: Game.master.login_motd ? Website.format_markdown_for_html(Game.master.login_motd) : nil,
           notification_count: notifications == 0 ? nil : notifications,
-          alts: alt_data
+          alts: alt_data,
+          yky: Yky::YkyRequestHandler.new.handle(request)
         }
       end
     end
