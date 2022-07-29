@@ -5,12 +5,12 @@ module AresMUSH
     def self.plugin_dir
       File.dirname(__FILE__)
     end
- 
+
     def self.shortcuts
       if Global.read_config("demographics", "disable_auto_shortcuts")
         return Global.read_config("demographics", "shortcuts")
       end
-      
+
       sc = {}
       Demographics.all_demographics.each do |d|
         shortname = d.gsub(/\s+/, '')
@@ -28,14 +28,14 @@ module AresMUSH
       end
       sc
     end
- 
+
     def self.get_cmd_handler(client, cmd, enactor)
-      
+
       case cmd.root
       when "age"
-        return AgeCmd 
+        return AgeCmd
       when "birthdate"
-        return BirthdateCmd       
+        return BirthdateCmd
       when "demographic"
         if (cmd.args)
           return BasicDemographicCmd
@@ -60,14 +60,16 @@ module AresMUSH
           end
         end
       end
-      
-      nil     
+
+      nil
     end
-    
+
     def self.get_web_request_handler(request)
       case request.cmd
       when "actors"
         return ActorsRequestHandler
+      when "censusBirthday"
+        return BirthdayCensusRequestHandler
       when "censusFull"
         return FullCensusRequestHandler
       when "censusGroup"
@@ -79,11 +81,11 @@ module AresMUSH
       end
       nil
     end
-    
+
     def self.check_config
       validator = DemographicsConfigValidator.new
       validator.validate
     end
-    
+
   end
 end

@@ -2,9 +2,9 @@ module AresMUSH
   module Demographics
     class CensusCmd
       include CommandHandler
-      
+
       attr_accessor :name, :page
-     
+
       def parse_args
         self.name = titlecase_arg(cmd.args)
         self.page = cmd.page
@@ -12,17 +12,18 @@ module AresMUSH
           matches = /(?<name>.+)(?<page>[\d]+)$/.match(self.name)
           self.name = matches[:name]
           self.page = matches[:page].to_i
-        end 
+        end
       end
-      
+
       def check_type
         types = Demographics.census_types
         return nil if !self.name
+        return nil if self.name == 'Birthday' || self.name == 'Birthdays'
         return t('demographics.invalid_census_type', :types => types.join(',')) if !types.include?(self.name)
         return nil
       end
-      
-      def handle   
+
+      def handle
         chars = Chargen.approved_chars
         paginator = Paginator.paginate(chars.sort_by { |c| c.name }, self.page, 20)
         if (paginator.out_of_bounds?)
@@ -31,6 +32,13 @@ module AresMUSH
         end
         if (!self.name)
           template = CompleteCensusTemplate.new(paginator)
+        elsif (self.name == "Birthday" || self.name == "Birthdays")
+          paginator = Paginator.paginate(chars.select(&:birthdate).sort_by(&:birthday), self.page, 20)
+          if (paginator.out_of_bounds?)
+            client.emit_failure paginator.out_of_bounds_msg
+            return
+          end
+          template = BirthdayCensusTemplate.new(paginator)
         elsif (self.name == "Timezone" || self.name == "Timezones")
           template = TimezoneCensusTemplate.new
         elsif (self.name == "Genders" || self.name == "Gender")
@@ -45,7 +53,7 @@ module AresMUSH
             client.emit_failure t('demographics.invalid_group_type')
             return
           end
-          template = GroupCensusTemplate.new(group, self.name)    
+          template = GroupCensusTemplate.new(group, self.name)
         end
         client.emit template.render
       end

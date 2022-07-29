@@ -127,6 +127,13 @@ module AresMUSH
         if spellList[spell]["special"]
           this_spell["special"] = spellList[spell]["special"]
         end
+
+        if spellList[spell]["note"]
+          this_spell["note"] = spellList[spell]["note"]["content"]
+          this_spell["prefix"] = spellList[spell]["note"]["prefix"]
+          this_spell["confirm"] = spellList[spell]["note"]["confirm"] ? spellList[spell]["note"]["confirm"] : false
+        end
+
         return this_spell
     end
 
@@ -141,6 +148,55 @@ module AresMUSH
         }
       }
       return char_spells
+    end
+
+    def self.has_spell?(name, spell)
+      known = false
+      included = false
+      charspells = Character.find_one_by_name(name).spells
+      char_spells(name).each do |cat, spells|
+        if spells.include? spell
+          included = true
+        end
+      end
+      if (charspells && included)
+        known = true
+      end
+      return known
+    end
+
+    def self.is_a_match?(char, target, spell)
+      match = false
+      first = Character.find_one_by_name(char)
+      second = Character.find_one_by_name(target)
+      if has_spell?(target, spell)
+        unless second.spellnotes
+          return match
+        end
+        is_set = second.spellnotes[spell]
+        content = is_set ? Character.find_one_by_name(is_set).name : "Not a match"
+        if (is_set and content == first.name)
+          match = true
+        end
+      end
+      return match
+    end
+
+    def self.processed_notes(char)
+      target = Character.find_one_by_name(char)
+      if target.spellnotes.nil?
+        target.update(spellnotes: {})
+      end
+      charnotes = target.spellnotes
+      charnotes.each { |spell, note|
+        prefix = spell_info(spell)["prefix"]
+        if KeysMagic.spell_info(spell)["confirm"]
+          charnotes[spell] = is_a_match?(char,note,spell) ? prefix + " " + note : nil
+        else
+          charnotes[spell] = prefix + " " + note
+        end
+      }
+      return charnotes
     end
 
     def self.current_cap(char, category)

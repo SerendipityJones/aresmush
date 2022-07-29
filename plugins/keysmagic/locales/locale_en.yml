@@ -21,3 +21,9 @@ en:
     spell_removed_job: "%{name} removed the %{spell} spell from %{pronoun} %{category} aspect."
 
     dunno_what_you_want_from_me: "spell/scan only works alone, with an aspect, or with a spell."
+
+    you_do_not_know_spell: "You don't know the %{spell} spell."
+    they_do_not_know_spell: "%{name} doesn't know the %{spell} spell."
+    spell_does_not_take_note: "%{spell} doesn't take a note."
+    spell_note_set: "%{spell} note set to %{content}!%{also}"
+    spell_note_cleared: "%{spell} note cleared!"

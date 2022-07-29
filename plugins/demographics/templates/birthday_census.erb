@@ -1,0 +1,7 @@
+<%= header %>
+%xh<%= left( "Name", 28 ) %> <%= left( "Month", month_width ) %> <%= left( "Day", day_width ) %>%xn
+<% paginator.items.each do |char| %>
+<%= left( char.name, 28 ) %> <%= format_month(char) %> <%= format_day(char) %>
+<% end %>
+<%= paginator.page_footer %>
+<%= footer %>

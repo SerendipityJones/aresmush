@@ -21,6 +21,8 @@ module AresMUSH
           return RemoveSpellCmd
         when "scan"
           return SpellScanCmd
+        when "note"
+          return SpellNoteCmd
         else
           return SpellInfoCmd
         end
