@@ -17,6 +17,11 @@ module AresMUSH
             number.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
           end
 
+          def plural?(number)
+            result = number == "1" ? "" : "s"
+            return result
+          end
+
           def handle
 
             @alt_tot_word_count = Array.new()
@@ -47,7 +52,7 @@ module AresMUSH
                   word_count = format_number(word_count)
                   scene_count = format_number(scene_count)
                   words_per_scene = format_number(words_per_scene)
-                  fmt_msg = "#{model.name} has written", word_count, "words in", scene_count, "scenes for an average of", words_per_scene, "per scene."
+                  fmt_msg = "#{model.name} has written", word_count, "word" + plural?(word_count), "in", scene_count, "scene" + plural?(scene_count), "for an average of", words_per_scene, "per scene."
                   msg = fmt_msg.join(" ")
                   client.emit msg
                 end
@@ -61,7 +66,7 @@ module AresMUSH
             total_alts = alts.size
 
             client.emit "\n"
-            fmt_msg = "Total:", alt_total_words, "words in", alt_total_scenes, "scenes with", total_alts, "alts."
+            fmt_msg = "Total:", alt_total_words, "word" + plural?(alt_total_words), "in", alt_total_scenes, "scene" + plural?(alt_total_scenes), "with", total_alts, "alt" + plural?(total_alts) +"."
             msg = fmt_msg.join(" ")
             client.emit_success msg
 

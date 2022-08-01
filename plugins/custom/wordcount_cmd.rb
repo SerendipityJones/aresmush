@@ -13,6 +13,11 @@ module AresMUSH
               number.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
             end
 
+            def plural?(number)
+              result = number == "1" ? "" : "s"
+              return result
+            end
+
             def handle
                 ClassTargetFinder.with_a_character(self.name, client, enactor) do |model|
                   word_count = model.pose_word_count
@@ -26,7 +31,7 @@ module AresMUSH
                     word_count = format_number(word_count)
                     scene_count = format_number(scene_count)
                     words_per_scene = format_number(words_per_scene)
-                    total_count = "#{model.name} has written", word_count, "words in", scene_count, "scenes for an average of", words_per_scene, "per scene."
+                    total_count = "#{model.name} has written", word_count, "word" + plural?(word_count), "in", scene_count, "scene" + plural?(scene_count), "for an average of", words_per_scene, "per scene."
                     msg = total_count.join(" ")
                     client.emit_success msg
                   end
