@@ -37,6 +37,10 @@ module AresMUSH
           if (KeysMagic.has_spell?(self.target, self.spell))
             if (KeysMagic.spell_info(self.spell)["note"])
               if (KeysMagic.spell_info(self.spell)["confirm"] && self.note)
+                unless Character.find_one_by_name(self.note)
+                  client.emit_failure t('keysmagic.not_a_character', :name => self.note)
+                  return
+                end
                 unless (KeysMagic.has_spell?(self.note, self.spell))
                   client.emit_failure t('keysmagic.they_do_not_know_spell',:name => self.note, :spell => self.spell)
                   return
