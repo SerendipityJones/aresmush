@@ -69,7 +69,7 @@ en:
 
         unknown_roll_params: "Can't figure out what you're trying to roll. You can specify a single ability, an optional ruling attribute, and an optional modifier.  See 'help roll' for more details."
 
-        npc: "%{name} (a NPC)"
+        npc: "%{name} (an NPC)"
         numbers_only_for_npc_skills: "Use a number for a NPC skill, like Badguy/3."
 
         # Review
