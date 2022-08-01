@@ -169,6 +169,9 @@ module AresMUSH
       match = false
       first = Character.find_one_by_name(char)
       second = Character.find_one_by_name(target)
+      unless second
+        return match
+      end
       if has_spell?(target, spell)
         unless second.spellnotes
           return match
@@ -252,6 +255,58 @@ module AresMUSH
         Jobs.close_job(Game.master.system_character, status[:job])
       end
     end
+
+    def self.parse_and_cast(char, spell, defense)
+      if (spell.is_integer?)
+        dice = (spell.to_i) + 2
+        die_result = FS3Skills.roll_dice(dice)
+      else
+        spell_params = KeysMagic.parse_spell_params(spell, defense)
+        if (!spell_params)
+          return nil
+        end
+        die_result = FS3Skills.roll_ability(char, spell_params)
+      end
+      die_result
+    end
+
+    def self.parse_spell_params(str, defense)
+      match = /^(?<spell>[^\+\-]+)\s*(?<modifier>[\+\-]\s*\d+)?$/.match(str)
+      return nil if !match
+
+      spell = KeysMagic.is_spell?(match[:spell].strip)
+      modifier = match[:modifier].nil? ? 0 : match[:modifier].gsub(/\s+/, "").to_i
+
+      #this is where we get what to roll for the spell
+      spellinfo = KeysMagic.spells[spell]
+      if defense
+        ability = spellinfo["defense"]["ability"]
+        attribute = spellinfo["defense"]["attribute"]
+      else
+        if spellinfo["offense"]
+          attribute = spellinfo["offense"]["attribute"]
+          ability = spellinfo["offense"]["ability"]
+        else
+          spellinfo["category"].each_with_index do |c, i|
+            if spellinfo["category"].length > 1
+              return
+            end
+            if spellinfo["attribute"]
+              attribute = spellinfo["attribute"]
+            else
+              attribute = categories[c]["attribute"]
+            end
+            if spellinfo["ability"]
+              ability = spellinfo["ability"]
+            else
+              ability = c
+            end
+          end
+        end
+      end
+      return FS3Skills::RollParams.new(ability, modifier, attribute)
+    end
+
 
   end
 end

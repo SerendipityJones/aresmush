@@ -40,6 +40,8 @@ module AresMUSH
                 unless Character.find_one_by_name(self.note)
                   client.emit_failure t('keysmagic.not_a_character', :name => self.note)
                   return
+                else
+                  self.note = Character.find_one_by_name(self.note).name
                 end
                 unless (KeysMagic.has_spell?(self.note, self.spell))
                   client.emit_failure t('keysmagic.they_do_not_know_spell',:name => self.note, :spell => self.spell)
@@ -59,6 +61,9 @@ module AresMUSH
               newnotes[self.spell] = self.note
               model.update(spellnotes: newnotes)
               if self.note.nil?
+                newnotes = model.spellnotes
+                newnotes.delete(self.spell)
+                model.update(spellnotes: newnotes)
                 client.emit_success t('keysmagic.spell_note_cleared', :spell => self.spell)
                 return
               else
