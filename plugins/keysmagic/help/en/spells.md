@@ -19,3 +19,7 @@ These commands are used in the Keys magic system.
 `spell/scan <spell>` - Shows you which characters know that spell.
 
 `spell/add <spell>[/<aspect>]` - Adds a spell to your spell list, if you meet the requirements. If the spell exists in more than one aspect, you need to specify which you want it to count toward (e.g., `spell/add Key Maker/Chaos` or `spell/add Key Maker/Law`)
+
+`spell/note <spell>=<note>` - Sets a note specifying the target of an ongoing spell. Spells that currently take notes are Familiar (who/what is yours?), Favoured Item (what is it?), and Telepathy (if you have a standing mindlink, with whom?).
+
+`spell/note <spell>` - Clears a note. 
