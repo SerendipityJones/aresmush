@@ -22,4 +22,10 @@ These commands are used in the Keys magic system.
 
 `spell/note <spell>=<note>` - Sets a note specifying the target of an ongoing spell. Spells that currently take notes are Familiar (who/what is yours?), Favoured Item (what is it?), and Telepathy (if you have a standing mindlink, with whom?).
 
-`spell/note <spell>` - Clears a note. 
+`spell/note <spell>` - Clears a note.
+
+`cast <spell>` - Casts an unopposed spell you know.
+`cast <name>/<spell>` - Casts an unopposed spell for another PC.
+`cast <spell> <vs|on> <character>` - Casts an opposed spell on/vs another PC.
+`cast <spell> <vs|on> <npc name>/<rating>` - Casts an opposed spell on/vs an NPC.
+`cast/private <options>` - Shows results only to yourself.
