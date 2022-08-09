@@ -14,7 +14,9 @@ module AresMUSH
         spellList = {}
         alts.each do |alt|
           spellList[alt.name] = {'opposed' => [], 'unopposed' => []}
-          fullList = KeysMagic.char_spells(alt.name) # this is just to guard against empty spell lists
+          if alt.spells.nil?
+            alt.update(spells: {})
+          end
           alt.spells.each do |category, spells|
             spells.each do |spell|
               unless (KeysMagic.spells[spell]['noroll'] || (KeysMagic.spells[spell]["offense"] && KeysMagic.spells[spell]["offense"]["only"]))
