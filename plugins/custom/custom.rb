@@ -2,7 +2,7 @@ $:.unshift File.dirname(__FILE__)
 
 module AresMUSH
   module Custom
-    
+
     def self.plugin_dir
       File.dirname(__FILE__)
     end
@@ -41,5 +41,14 @@ module AresMUSH
         end
       return nil
     end
+
+    def self.get_web_request_handler(request)
+       case request.cmd
+       when "luckConversion"
+         return LuckConversionRequestHandler
+       end
+       nil
+    end
+
   end
 end

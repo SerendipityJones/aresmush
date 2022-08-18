@@ -49,7 +49,6 @@ module AresMUSH
                 return { success: t('keysmagic.spell_note_cleared', :spell => spell) }
               else
                 return { success: t('keysmagic.spell_note_set', :spell => spell, :content => note, :also => also) }
-                return
               end
             else
               return { error: t('keysmagic.spell_does_not_take_note', :spell => spell) }
