@@ -15,7 +15,8 @@ module AresMUSH
       def self.get_fields_for_viewing(char, viewer)
         return {
           spells: KeysMagic.char_spells(char.name),
-          spellnotes: KeysMagic.processed_notes(char.name)
+          spellnotes: KeysMagic.processed_notes(char.name),
+          dotcount: Custom.web_dotcount(char.name)
         }
       end
 
