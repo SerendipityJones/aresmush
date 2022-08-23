@@ -60,12 +60,6 @@ module AresMUSH
         return CharSpellsRequestHandler
       when "charSpellList"
         return CharSpellListRequestHandler
-      when "charSpellLearn"
-        return CharSpellLearnRequestHandler
-      when "charSpellLearnable"
-        return CharSpellLearnableRequestHandler
-      when "charSetSpellNote"
-        return CharSpellNoteRequestHandler  
       when "addSceneSpell"
         return AddSceneSpellRequestHandler
       end

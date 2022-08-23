@@ -89,7 +89,7 @@ module AresMUSH
             end
             return
           end
-          unless (KeysMagic.can_learn?(model, self.category[0]))
+          unless (can_learn?(model, self.category[0]))
             if (ownspell)
               client.emit_failure t('keysmagic.you_cannot_learn', :spell => self.spell, :category => self.category[0])
             else
@@ -106,6 +106,14 @@ module AresMUSH
           else
             client.emit_success t('keysmagic.their_spell_added', :name => model.name, :spell => self.spell, :category => self.category[0])
           end
+        end
+      end
+
+      def can_learn?(char, category)
+        spellcap = KeysMagic.current_cap(char, category)
+        spellsknown = char.spells[category].nil? ? 0 : char.spells[category].length
+        if (spellsknown < spellcap)
+          true
         end
       end
 

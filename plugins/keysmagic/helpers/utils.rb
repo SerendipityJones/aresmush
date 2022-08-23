@@ -211,14 +211,6 @@ module AresMUSH
       return spellcap
     end
 
-    def self.can_learn?(char, category)
-      spellcap = KeysMagic.current_cap(char, category)
-      spellsknown = char.spells[category].nil? ? 0 : char.spells[category].length
-      if (spellsknown < spellcap)
-        true
-      end
-    end
-
     def self.spell_demographics
       allChars = Chargen.approved_chars
         .to_h { |c| [c.name, c.spells] }
@@ -501,42 +493,6 @@ module AresMUSH
       end
 
       return { message: message }
-    end
-
-    def self.learnableSpells(char)
-      aspects = []
-      slots = []
-      learnable = Hash.new
-
-      ClassTargetFinder.with_a_character(char.name, Character, char) do |model|
-        spells = Hash.new
-        KeysMagic.catlist.each_with_index do |cat, i|
-          spells[cat] = {}
-          if model.spells.nil? || model.spells.empty?
-            spells[cat]["known"] = 0
-          else
-            spells[cat]["known"] = model.spells[cat].nil? ? 0 : model.spells[cat].length
-            currentSpells = model.spells[cat].nil? ? [] : model.spells[cat]
-            learnable[cat] = KeysMagic.category_spells(cat) - currentSpells
-          end
-          if FS3Skills.find_ability(model, cat)
-            spells[cat]["allowed"] = KeysMagic.current_cap(model, cat)
-          else
-            spells[cat]["allowed"] = 0
-          end
-          cat_slots = spells[cat]["allowed"] - spells[cat]["known"]
-          if cat_slots > 0
-            aspects << cat
-            slots << cat_slots
-          end
-        end
-      end
-
-      {
-        aspects: aspects,
-        slots: slots,
-        learnable: learnable
-      }
     end
 
   end
