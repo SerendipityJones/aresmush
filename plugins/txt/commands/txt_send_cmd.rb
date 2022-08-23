@@ -167,7 +167,6 @@ module AresMUSH
 
           enactor.update(txt_last: list_arg(recipient_names))
           enactor.update(txt_scene: self.scene_id)
-          Scenes.handle_word_count_achievements(enactor, message)
       end
 
       def log_command

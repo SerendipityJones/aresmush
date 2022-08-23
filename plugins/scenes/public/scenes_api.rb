@@ -141,29 +141,27 @@ module AresMUSH
       if char.handle
         handle_name = char.handle.name
         alts = AresCentral.alts(char).map { |c| c.name }
-      else
-        alts = [char.name]
-      end
-      total_alts = 0
-      alt_total_words = 0
-      alt_total_scenes = 0
-      alts.sort.each { |n|
-        current_alt = "#{n}"
-        ClassTargetFinder.with_a_character(current_alt, Character, char) do |model|
-          total_alts += 1
-          alt_total_words += model.pose_word_count
-          alt_total_scenes += model.scenes_participated_in.size
+        total_alts = 0
+        alt_total_words = 0
+        alt_total_scenes = 0
+        alts.sort.each { |n|
+          current_alt = "#{n}"
+          ClassTargetFinder.with_a_character(current_alt, Character, char) do |model|
+            total_alts += 1
+            alt_total_words += model.pose_word_count
+            alt_total_scenes += model.scenes_participated_in.size
+          end
+        }
+        if (alt_total_words > 0 && alt_total_scenes > 0)
+          alt_average_words = ((alt_total_words + 0.0) / alt_total_scenes).round
+        else
+          alt_average_words = 0
         end
-      }
-      if (alt_total_words > 0 && alt_total_scenes > 0)
-        alt_average_words = ((alt_total_words + 0.0) / alt_total_scenes).round
-      else
-        alt_average_words = 0
+        total_alts = total_alts == 1 ? total_alts.to_s << " alt" : total_alts.to_s << " alts"
+        alt_total_words = alt_total_words == 1 ? alt_total_words.to_s << " word" : alt_total_words.to_s << " words"
+        alt_total_scenes = alt_total_scenes == 1 ? alt_total_scenes.to_s << " scene" : alt_total_scenes.to_s << " scenes"
+        alt_average_words = alt_average_words == 1 ? alt_average_words.to_s << " word" : alt_average_words.to_s << " words"
       end
-      total_alts = total_alts == 1 ? total_alts.to_s << " alt" : total_alts.to_s << " alts"
-      alt_total_words = alt_total_words == 1 ? alt_total_words.to_s << " word" : alt_total_words.to_s << " words"
-      alt_total_scenes = alt_total_scenes == 1 ? alt_total_scenes.to_s << " scene" : alt_total_scenes.to_s << " scenes"
-      alt_average_words = alt_average_words == 1 ? alt_average_words.to_s << " word" : alt_average_words.to_s << " words"
 
       {
         scene_stats: {
