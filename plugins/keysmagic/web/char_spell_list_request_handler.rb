@@ -9,24 +9,19 @@ module AresMUSH
           return []
         end
 
-        alts = AresCentral.play_screen_alts(char)
-
-        spellList = {}
-        alts.each do |alt|
-          spellList[alt.name] = {'opposed' => [], 'unopposed' => []}
-          alt.spells.each do |category, spells|
-            spells.each do |spell|
-              unless (KeysMagic.spells[spell]['noroll'] || (KeysMagic.spells[spell]["offense"] && KeysMagic.spells[spell]["offense"]["only"]))
-                spellList[alt.name]['unopposed'] << spell
-              end
-              if (KeysMagic.spells[spell]["offense"])
-                spellList[alt.name]['opposed'] << spell
-              end
+        spellList = {'opposed' => [], 'unopposed' => []}
+        char.spells.each do |category, spells|
+          spells.each do |spell|
+            unless (KeysMagic.spells[spell]['noroll'] || (KeysMagic.spells[spell]["offense"] && KeysMagic.spells[spell]["offense"]["only"]))
+              spellList['unopposed'] << spell
+            end
+            if (KeysMagic.spells[spell]["offense"])
+              spellList['opposed'] << spell
             end
           end
-          spellList[alt.name]['unopposed'].sort!
-          spellList[alt.name]['opposed'].sort!
         end
+        spellList['unopposed'].sort!
+        spellList['opposed'].sort!
 
         error = Website.check_login(request, true)
         return error if error
