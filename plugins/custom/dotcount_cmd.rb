@@ -19,10 +19,7 @@ module AresMUSH
           spent_attrs = FS3Skills::AbilityPointCounter.points_on_attrs(model)/2 + Global.read_config('fs3skills', 'attributes').length * 2
           spent_action = FS3Skills::AbilityPointCounter.points_on_action(model) + Global.read_config('fs3skills', 'action_skills').length
           model.fs3_attributes.each do |attr|
-            if attr.rating == 1
-               max_attrs -= 1
-               spent_attrs -= 1
-            end
+            if attr.rating == 1 then max_attrs-=1 end
           end
 		  msg = <<-DOTS.chomp
 Total dots on #{model.name}'s sheet:
