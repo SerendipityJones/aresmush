@@ -2,7 +2,6 @@ $:.unshift File.dirname(__FILE__)
 
 module AresMUSH
   module Custom
-    
     def self.plugin_dir
       File.dirname(__FILE__)
     end
@@ -38,7 +37,7 @@ module AresMUSH
           when nil
             return WordCountCmd
           end
-        end
+        end  
       return nil
     end
   end
