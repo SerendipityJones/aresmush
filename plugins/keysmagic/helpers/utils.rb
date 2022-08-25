@@ -514,11 +514,12 @@ module AresMUSH
           spells[cat] = {}
           if model.spells.nil? || model.spells.empty?
             spells[cat]["known"] = 0
+            currentSpells = []
           else
             spells[cat]["known"] = model.spells[cat].nil? ? 0 : model.spells[cat].length
             currentSpells = model.spells[cat].nil? ? [] : model.spells[cat]
-            learnable[cat] = KeysMagic.category_spells(cat) - currentSpells
           end
+            learnable[cat] = KeysMagic.category_spells(cat) - currentSpells
           if FS3Skills.find_ability(model, cat)
             spells[cat]["allowed"] = KeysMagic.current_cap(model, cat)
           else
