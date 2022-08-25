@@ -307,6 +307,195 @@ module AresMUSH
       return FS3Skills::RollParams.new(ability, modifier, attribute)
     end
 
+    def self.determine_web_cast_result(request, enactor)
+
+      if !request.args[:pc_spell].blank?
+        spell_str = request.args[:pc_spell]
+      elsif !request.args[:vs_roll1].blank?
+        spell_str = request.args[:vs_roll1]
+      elsif !request.args[:pc_target].blank?
+        spell_str = request.args[:spell_opposed]
+      elsif !request.args[:spell_string].blank?
+        spell_str = request.args[:spell_string]
+      end
+      vs_roll1 = request.args[:vs_roll1] || ""
+      vs_roll2 = request.args[:vs_roll2] || ""
+      vs_name1 = (request.args[:vs_name1] || "").titlecase
+      vs_name2 = (request.args[:vs_name2] || "").titlecase
+      pc_name = request.args[:pc_name] || ""
+      pc_spell = request.args[:pc_spell] || ""
+      pc_target = request.args[:pc_target] || ""
+      npc_rating =  request.args[:npc_rating] || ""
+      if vs_roll1.is_integer?
+        return { error: t('keysmagic.npcs_do_not_know_spells') }
+      end
+      spell = KeysMagic.is_spell?(spell_str.split(/[+-]/).first.strip)
+      modifier_base = "#{spell_str.split(/([+-])/)[1]}"+"#{spell_str.split(/([+-])/)[2]}".delete(" ")
+      modifier = modifier_base.nil? ? 0 : modifier_base.to_i
+      spell_str = spell + modifier_base
+
+      if !spell
+        if vs_roll1
+          spell_str = vs_roll1
+          return
+        end
+        return { error: t('keysmagic.no_such_spell') }
+      end
+
+      if(!vs_roll2.blank? && !vs_roll2.is_integer?)
+        return { error: t('keysmagic.npc_skill_bad_format') }
+      end
+
+      # ------------------
+      # VS ROLL
+      # ------------------
+      if (!vs_roll1.blank?||!pc_target.blank?)
+        if KeysMagic.spells[spell]['noroll']
+          return { error: t('keysmagic.spell_does_not_roll', :spell => spell) }
+        elsif (!KeysMagic.spells[spell]["offense"])
+          return { error: t('keysmagic.spell_can_only_roll_unopposed', :spell => spell) }
+        end
+        caster = vs_roll1.blank? ? enactor.name : vs_name1
+        result = ClassTargetFinder.find(caster, Character, enactor)
+        model1 = result.target
+
+        spell_target = vs_roll1.blank? ? pc_target : vs_name2
+        result = ClassTargetFinder.find(spell_target, Character, enactor)
+        model2 = result.target
+        if (!model2 && !pc_target.blank? && npc_rating.blank?)
+          return { error: t('keysmagic.npc_skill_bad_format') }
+        end
+        spell_target = model2 ? model2.name : (pc_target.blank? ? vs_name2 : pc_target)
+        spell_counter = model2 ? spell_str : (npc_rating.blank? ? vs_roll2 : npc_rating)
+        unless model1 && KeysMagic.has_spell?(caster,spell)
+          if model1
+            return { error: t('keysmagic.they_do_not_know_spell', :name => caster, :spell => spell) }
+          else
+            return { error: t('keysmagic.npcs_do_not_know_spells') }
+          end
+        end
+
+        die_result1 = KeysMagic.parse_and_cast(model1, spell_str, false)
+        die_result2 = KeysMagic.parse_and_cast(model2, spell_counter, true)
+
+        if (!die_result1 || !die_result2)
+          return { error: t('keysmagic.unknown_spell_params') }
+        end
+
+        successes1 = FS3Skills.get_success_level(die_result1)
+        successes2 = FS3Skills.get_success_level(die_result2)
+
+        until successes1 != successes2 do
+          die_result1 = KeysMagic.parse_and_cast(model1, spell_str, false)
+          die_result2 = KeysMagic.parse_and_cast(model2, spell_counter, true)
+
+          if (!die_result1 || !die_result2)
+            return { error: t('keysmagic.unknown_spell_params') }
+          end
+
+          successes1 = FS3Skills.get_success_level(die_result1)
+          successes2 = FS3Skills.get_success_level(die_result2)
+
+        end
+
+        results = FS3Skills.opposed_result_title(caster, successes1, spell_target, successes2)
+
+        message = t('keysmagic.opposed_cast_result',
+           :name1 => !model1 ? t('fs3skills.npc', :name => caster) : model1.name,
+           :name2 => !model2 ? t('fs3skills.npc', :name => spell_target) : model2.name,
+           :spell => spell_str,
+           :dice1 => FS3Skills.print_dice(die_result1),
+           :dice2 => FS3Skills.print_dice(die_result2),
+           :preposition => "vs",
+           :result => results,
+           :roller => enactor.name
+            )
+
+      # ------------------
+      # PC ROLL
+      # ------------------
+
+    elsif (spell == "Key Maker")
+        caster = pc_name.blank? ? enactor : Character.find_one_by_name(pc_name)
+        unless KeysMagic.has_spell?(caster.name,spell)
+          if caster.name == enactor.name
+            return { error: t('keysmagic.you_do_not_know_spell', :spell => spell) }
+          else
+            return { error: t('keysmagic.they_do_not_know_spell', :name => char.name, :spell => spell) }
+          end
+        end
+        time_roll = FS3Skills::RollParams.new("Law", modifier, "Wits")
+        place_roll = FS3Skills::RollParams.new("Chaos", modifier, "Grit")
+        time_result = FS3Skills.roll_ability(caster, time_roll)
+        place_result = FS3Skills.roll_ability(caster, place_roll)
+        time_level = FS3Skills.get_success_level(time_result)
+        time_title = FS3Skills.get_success_title(time_level)
+        place_level = FS3Skills.get_success_level(place_result)
+        place_title = FS3Skills.get_success_title(place_level)
+        message = t('keysmagic.keymaker_cast_result',
+          :name => caster.name,
+          :spell => spell_str,
+          :time_dice => FS3Skills.print_dice(time_result),
+          :place_dice => FS3Skills.print_dice(place_result),
+          :time_success => time_title,
+          :place_success => place_title,
+          :roller => enactor.name
+        )
+
+      elsif (!pc_name.blank?)
+        char = Character.find_one_by_name(pc_name)
+
+        if (!char)
+          return { error: t('keysmagic.npcs_do_not_know_spells') }
+        end
+
+        unless KeysMagic.has_spell?(char.name,spell)
+          if char.name == enactor.name
+            return { error: t('keysmagic.you_do_not_know_spell', :spell => spell) }
+          else
+            return { error: t('keysmagic.they_do_not_know_spell', :name => char.name, :spell => spell) }
+          end
+        end
+
+        if KeysMagic.spells[spell]['noroll']
+          return { error: t('keysmagic.spell_does_not_roll', :spell => spell) }
+        elsif (KeysMagic.spells[spell]["offense"] && KeysMagic.spells[spell]["offense"]["only"])
+          return { error: t('keysmagic.spell_cannot_roll_unopposed', :spell => spell) }
+        end
+
+        roll = KeysMagic.parse_and_cast(char, spell_str, false)
+        roll_result = FS3Skills.get_success_level(roll)
+        success_title = FS3Skills.get_success_title(roll_result)
+        message = t('keysmagic.simple_cast_result',
+          :name => char.name ,
+          :spell => spell_str,
+          :dice => FS3Skills.print_dice(roll),
+          :success => success_title,
+          :roller => enactor.name
+          )
+
+      # ------------------
+      # SELF ROLL
+      # ------------------
+
+      else
+        unless KeysMagic.has_spell?(enactor.name,spell)
+          return { error: t('keysmagic.you_do_not_know_spell', :spell => spell) }
+        end
+        roll = KeysMagic.parse_and_cast(enactor, spell_str, false)
+        roll_result = FS3Skills.get_success_level(roll)
+        success_title = FS3Skills.get_success_title(roll_result)
+        message = t('keysmagic.simple_cast_result',
+          :name => enactor.name,
+          :spell => spell_str,
+          :dice => FS3Skills.print_dice(roll),
+          :success => success_title,
+          :roller => enactor.name
+          )
+      end
+
+      return { message: message }
+    end
 
   end
 end

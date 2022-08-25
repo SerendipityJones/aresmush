@@ -35,6 +35,12 @@ module AresMUSH
         end
       when "spellcount"
         return SpellcountCmd
+      when "cast"
+        if ((cmd.args =~ / vs /) || (cmd.args =~ / on /))
+          return OpposedCastCmd
+        else
+          return CastCmd
+        end
       end
     end
 
@@ -52,6 +58,10 @@ module AresMUSH
         return SpellListRequestHandler
       when "charSpells"
         return CharSpellsRequestHandler
+      when "charSpellList"
+        return CharSpellListRequestHandler
+      when "addSceneSpell"
+        return AddSceneSpellRequestHandler
       end
       nil
     end
