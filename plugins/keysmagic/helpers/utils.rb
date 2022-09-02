@@ -63,6 +63,20 @@ module AresMUSH
       return allSpells
     end
 
+    def self.get_spell_page(id)
+      name = KeysMagic.is_spell?(id.gsub(/[_-]/," "))
+      spell = KeysMagic.spells[name]
+      spell['desc']['full'] = Website.format_markdown_for_html(spell['desc']['full'])
+      category = KeysMagic.categories.select { | name, data | spell['category'].include? name.to_s }
+      pic = KeysMagic.pix.sample
+      {
+        name: name,
+        spell: spell,
+        category: category,
+        pic: pic
+      }
+    end
+
     def self.spell_info(spell)
       spellList = KeysMagic.spells
       categories = KeysMagic.categories
@@ -519,7 +533,10 @@ module AresMUSH
             spells[cat]["known"] = model.spells[cat].nil? ? 0 : model.spells[cat].length
             currentSpells = model.spells[cat].nil? ? [] : model.spells[cat]
           end
-            learnable[cat] = KeysMagic.category_spells(cat) - currentSpells
+          learnable[cat] = KeysMagic.category_spells(cat) - currentSpells
+          if KeysMagic.has_spell?(char.name, 'Key Maker')
+            learnable[cat] = learnable[cat] - ['Key Maker']
+          end
           if FS3Skills.find_ability(model, cat)
             spells[cat]["allowed"] = KeysMagic.current_cap(model, cat)
           else
