@@ -46,3 +46,5 @@ killares
 # -----------------------------
 /game/
 plugins/tinker/commands/tinker_cmd.rb
+.vscode/sftp.json
+aresmush.code-workspace

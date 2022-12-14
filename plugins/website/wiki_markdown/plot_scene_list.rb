@@ -18,9 +18,6 @@ module AresMUSH
           option_name = opt.before('=') || ""
           option_value = opt.after('=') || ""
 
-          Global.logger.info option_name
-          Global.logger.info option_value
-
           case option_name.downcase
           when "plot"
             plot_id = option_value
