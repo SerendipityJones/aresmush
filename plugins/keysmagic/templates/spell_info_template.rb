@@ -36,6 +36,7 @@ module AresMUSH
 
       def text
         info = KeysMagic.spells[spell]["desc"]["full"].gsub(/\/\//, "*").gsub('[[div class="spellrolls"]]', "#{"%x179·%xn"*78}\n").gsub(/^\[\[\/div\]\]/, "#{"%x179·%xn"*78}").gsub(/\[\[div class\=\"result\"\]\](.+?)\[\[\/div\]\]/){left($1<<':',22)}.gsub(/\[\[div class\=\"outcome\"\]\](.+)\[\[\/div\]\]/){wrap($1,56,22)<<"\n"}.gsub(/\[\[\[.+?\|(.+)\]\]\]/){$1}
+        return info
       end
 
       def format_spell(s, i)
