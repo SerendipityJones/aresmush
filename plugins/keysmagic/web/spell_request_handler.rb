@@ -3,13 +3,14 @@ module AresMUSH
     class SpellRequestHandler
       def handle(request)
         name = KeysMagic.is_spell?(request.args[:name].gsub(/[_-]/," "))
-        spell = KeysMagic.spells[name]
-        spell['desc']['full'] = Website.format_markdown_for_html(spell['desc']['full'])
-        category = KeysMagic.categories.select { | name, data | spell['category'].include? name.to_s }
+        original = KeysMagic.spells[name]
+        currentspell = Marshal.load(Marshal.dump(original))
+        currentspell['desc']['full'] = Website.format_markdown_for_html(currentspell['desc']['full'])
+        category = KeysMagic.categories.select { | name, data | currentspell['category'].include? name.to_s }
         pic = KeysMagic.pix.sample
         {
           name: name,
-          spell: spell,
+          spell: currentspell,
           category: category,
           pic: pic
         }
