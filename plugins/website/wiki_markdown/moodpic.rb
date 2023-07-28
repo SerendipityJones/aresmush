@@ -28,13 +28,15 @@ module AresMUSH
 	      key = pix.keys.sample 
         source = pix[key][0]
 		    caption = pix[key][1]
+		    description = pix[key][2]
 
         template = HandlebarsTemplate.new(File.join(AresMUSH.plugin_path, 'website', 'templates', 'moodpic.hbs'))
 
         data = {
           "source" => source,
-		  "align" => align,
-		  "caption" => caption
+		      "align" => align,
+		      "caption" => caption,
+		      "description" => description
         }
 
         template.render(data)
