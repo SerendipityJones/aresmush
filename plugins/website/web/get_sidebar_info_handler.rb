@@ -3,7 +3,6 @@ module AresMUSH
     class GetSidebarInfoRequestHandler
       def handle(request)
 
-        Global.logger.debug "Sidebar called..."
         enactor = request.enactor
 
         error = Website.check_login(request, true)
@@ -61,7 +60,7 @@ module AresMUSH
           motd: Game.master.login_motd ? Website.format_markdown_for_html(Game.master.login_motd) : nil,
           notification_count: notifications == 0 ? nil : notifications,
           alts: alt_data,
-          yky: Yky.get_yky_image()
+          yky: Yky.get_yky_imageS
         }
       end
     end
