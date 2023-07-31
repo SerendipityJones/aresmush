@@ -2,6 +2,7 @@ module AresMUSH
   module Website
     class GetSidebarInfoRequestHandler
       def handle(request)
+
         enactor = request.enactor
 
         error = Website.check_login(request, true)
@@ -59,7 +60,7 @@ module AresMUSH
           motd: Game.master.login_motd ? Website.format_markdown_for_html(Game.master.login_motd) : nil,
           notification_count: notifications == 0 ? nil : notifications,
           alts: alt_data,
-          yky: Yky::YkyRequestHandler.new.handle(request)
+          yky: Yky.get_yky_images
         }
       end
     end

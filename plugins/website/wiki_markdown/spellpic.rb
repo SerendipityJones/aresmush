@@ -30,7 +30,7 @@ module AresMUSH
         
         data = {
           "source" => source,
-		  "align" => align
+          "align" => align
         }
         
         template.render(data)        
