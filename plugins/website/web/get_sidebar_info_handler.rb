@@ -60,7 +60,7 @@ module AresMUSH
           motd: Game.master.login_motd ? Website.format_markdown_for_html(Game.master.login_motd) : nil,
           notification_count: notifications == 0 ? nil : notifications,
           alts: alt_data,
-          yky: Yky.get_yky_images
+          yky: Yky.get_yky_image
         }
       end
     end
