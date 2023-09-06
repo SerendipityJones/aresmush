@@ -34,7 +34,9 @@ module AresMUSH
           end
           (charspells[category] ||= []) << spell
           model.update(spells: charspells)
-        end
+          pronoun = Demographics.possessive_pronoun(model)
+          KeysMagic.create_spell_job(model, spell, category, pronoun, 'add')
+         end
         #then we return the updated availability information
         #return KeysMagic.learnableSpells(char)
       end
