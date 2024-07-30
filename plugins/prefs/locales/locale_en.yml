@@ -1,0 +1,7 @@
+---
+en:
+  prefs:
+      prefs_title: "RP Preferences for %{name}"
+      pref_set: "Preferences set."
+      prefs_filter_title: "RP Preferences Matching %{search}"
+      none_set: "%{name} has no RP preferences set."
