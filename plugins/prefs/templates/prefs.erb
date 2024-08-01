@@ -1,23 +1,13 @@
 %lh
 %xn<%= t('prefs.prefs_title', :name => name )%>%xn
-
-<%= left '-----  %xg+%xn  ', 78, '-' %>
-<% positive.each do |name, data| %>
-%xh<%= left(name, 15) %>%xn <%= note(data) %>
+<% prefs.each do |cat, data|%>
+<%= line_with_text cat%>
+<% data.each do |key, desc| %>
+%xh<%= left(desc(cat, key), 75) %>%xn <%= setting(cat, key) %>
 <% end %>
-
-<%= left '-----  %xy~%xn  ', 78, '-' %>
-<% maybe.each do |name, data| %>
-%xh<%= left(name, 15) %>%xn <%= note(data) %>
 <% end %>
-
-<%= left '-----  %xr-%xn  ', 78, '-' %>
-<% negative.each do |name, data| %>
-%xh<%= left(name, 15) %>%xn <%= note(data) %>
-<% end %>
-<% if char.prefs_notes %>
-
+<% if hasnotes %>
 <%= line_with_text t('prefs.notes_title')%>
-<%= char.prefs_notes %>
+<%= notes %>
 <% end %>
-%ld
+%lf

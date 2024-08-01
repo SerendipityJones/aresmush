@@ -31,6 +31,45 @@ module AresMUSH
       pref_list = char.rp_prefs 
       return pref_list
     end
+
+    def self.sort_prefs
+      pref_list = Global.read_config('prefs', 'preferences')        
+      cat_list = pref_list.keys
+      chars = Chargen.approved_chars
+        .select { |c| !c.rp_prefs.blank? }
+        .sort_by { |c| c.name }
+        .map { |c| {
+          name: c.name,
+          rp_prefs: c.rp_prefs
+         }
+      }
+      everything = {}
+      pref_list.each do |cat, the_prefs|
+        everything[cat] = {}
+        the_prefs.each do |key, desc|
+          everything[cat][key] = {}
+          3.times.each do |lvl|
+            everything[cat][key][lvl + 1] = chars
+              .select { |c| c[:rp_prefs][cat][key] == (lvl + 1).to_s}
+              .map { |c| c[:name] }
+              .sort
+          end
+        end  
+      end
+      {
+        pref_list: pref_list,
+        pref_sort: everything
+      }
+    end  
+
+    def self.valid_key(key)
+      Prefs.preferences.each do |cat, prefs|
+        if (prefs.key?(key))
+          return true
+        end 
+      end 
+      return false 
+    end        
     
     def self.uninstall_plugin
       Character.all.each do |c|

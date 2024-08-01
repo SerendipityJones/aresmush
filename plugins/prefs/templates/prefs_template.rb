@@ -14,34 +14,32 @@ module AresMUSH
       end
       
       def prefs
-        @char.prefs || {}
+        @char.rp_prefs || {}
+      end
+
+      def hasnotes
+        @char.rp_notes || nil
+      end
+
+      def notes
+        formatter = MarkdownFormatter.new
+        formatter.to_mush(@char.rp_notes)
       end
       
-      def positive
-        prefs.select { |k, v| v['setting'] == '+' }.sort
+      def desc(cat, key)
+        pref_list=Prefs.preferences
+        return pref_list[cat][key]
       end
       
-      def negative
-        prefs.select { |k, v| v['setting'] == '-' }.sort
-      end
-      
-      def maybe
-        prefs.select { |k, v| v['setting'] == '~' }.sort
-      end
-      
-      def note(data)
-        return data['note']
-      end
-      
-      def setting(data)
-        setting = data['setting']
+      def setting(cat, key)
+        setting = prefs[cat][key]
         case setting
-        when "+"
-          return "%xg+%xn"
-        when "-"
-          return "%xr-%xn"
+        when "3"
+          return "%xgG%xn"
+        when "1"
+          return "%xrR%xn"
         else
-          return "%xy~%xn"
+          return "%xyY%xn"
         end
       end
     end

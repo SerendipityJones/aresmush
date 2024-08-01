@@ -13,15 +13,24 @@ module AresMUSH
 
     def self.get_cmd_handler(client, cmd, enactor)
       case cmd.root
-      when "pref"
+      when "prefs"
         case cmd.switch
-#        when "search"
-#          return FilterPrefsCmd
-        when "set"
-          return SetPrefsCmd
+        when "list"
+          return ListPrefsCmd
+        when "notes"
+          return PrefsNotesCmd
         when nil
           return PrefsCmd
         end
+      when "pref"
+        case cmd.switch
+        when "set"
+          return SetPrefCmd
+#        when "note"
+#          return PrefNoteCmd
+        when nil
+          return PrefCmd  
+        end  
       end
     end
 
