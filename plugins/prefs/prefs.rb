@@ -15,8 +15,8 @@ module AresMUSH
       case cmd.root
       when "pref"
         case cmd.switch
-        when "search"
-          return FilterPrefsCmd
+#        when "search"
+#          return FilterPrefsCmd
         when "set"
           return SetPrefsCmd
         when nil
