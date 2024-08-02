@@ -1,0 +1,13 @@
+%lh
+%xn<%= t('prefs.prefs_title', :name => name )%>%xn
+<% prefs.each do |cat, data|%>
+<%= line_with_text cat%>
+<% data.each do |key, desc| %>
+%xh<%= left(desc(cat, key), 75) %>%xn <%= setting(cat, key) %>
+<% end %>
+<% end %>
+<% if hasnotes %>
+<%= line_with_text t('prefs.notes_title')%>
+<%= notes %>
+<% end %>
+%lf

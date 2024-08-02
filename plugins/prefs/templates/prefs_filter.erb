@@ -1,0 +1,8 @@
+%lh
+%xn<%= t('prefs.prefs_filter_title', :search => search )%>%xn
+
+<% @chars.each do |char| %>
+%xh<%= char.name %>%xn - <%= char.rp_prefs %>
+%ld
+<% end %>
+%lf

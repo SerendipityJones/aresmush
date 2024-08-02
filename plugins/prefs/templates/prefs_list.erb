@@ -1,0 +1,9 @@
+%lh
+%xn<%= t('prefs.prefs_list_title')%>%xn
+<% prefs.each do |cat, data|%>
+<%= line_with_text cat%>
+<% data.each do |key, desc| %>
+%xh<%= left(key + ':', 16) %>%xn <%= wrap(desc(cat, key), 62, 17) %>
+<% end %>
+<% end %>
+%lf

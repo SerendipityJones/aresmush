@@ -1,0 +1,15 @@
+---
+en:
+  prefs:
+      prefs_title: "RP Preferences for %{name}"
+      pref_title: "RP Preferences for %{pref}"
+      pref_set: "Preference for '%{pref}' set to %{level}."
+      pref_invalid: "'%{error}' is not an available preference. Check prefs/list for a list."
+      level_invalid: "'%{error}' is not an available preference level. You can use 1/2/3. R/Y/G, or Red/Yellow/Green."
+      prefs_filter_title: "RP Preferences Matching %{search}"
+      prefs_list_title: "RP Preference Short-Name List"
+      no_pref_given: "You must specify the short-name of the pref you'd like to view."
+      none_set: "%{name} has no RP preferences set."
+      notes_title: "Notes"
+      notes_set: "Preferences notes field set!"
+      notes_cleared: "Preferences notes field cleared!"
