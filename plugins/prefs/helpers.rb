@@ -40,9 +40,16 @@ module AresMUSH
         .sort_by { |c| c.name }
         .map { |c| {
           name: c.name,
-          rp_prefs: c.rp_prefs
+          rp_prefs: c.rp_prefs,
+          rp_notes: c.rp_notes
          }
       }
+      notes = []
+      chars.each do |c|
+        if (c[:rp_notes])
+          notes << c[:name]
+        end
+      end
       everything = {}
       pref_list.each do |cat, the_prefs|
         everything[cat] = {}
@@ -58,7 +65,8 @@ module AresMUSH
       end
       {
         pref_list: pref_list,
-        pref_sort: everything
+        pref_sort: everything,
+        pref_notes: notes
       }
     end  
 
