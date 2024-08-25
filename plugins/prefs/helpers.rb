@@ -19,10 +19,10 @@ module AresMUSH
       Prefs.preferences.each do |cat, items|
         temp_prefs = {}
         items.each do |key, desc|
-          if (char.rp_prefs == nil || !char.rp_prefs[cat].key?(key))
-            temp_prefs[key] = "2"
-          else
+          if (!char.rp_prefs.nil? && char.rp_prefs[cat].key?(key))
             temp_prefs[key] = char.rp_prefs[cat][key]  
+          else
+            temp_prefs[key] = "2"
           end
         end  
         new_prefs[cat] = temp_prefs

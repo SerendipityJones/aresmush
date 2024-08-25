@@ -14,9 +14,9 @@ module AresMUSH
       if (!Prefs.can_edit_prefs?(enactor, char))
         return t('dispatcher.not_allowed')
       end
-      Global.logger.info args[:rp_prefs]
       char.update(rp_prefs: args[:rp_prefs])
-      char.update(rp_notes: Website.format_input_for_mush(args[:rp_notes]))
+      new_notes = args[:rp_notes]=='' ? nil : Website.format_input_for_mush(args[:rp_notes])
+      char.update(rp_notes: new_notes)
       nil
     end
     
