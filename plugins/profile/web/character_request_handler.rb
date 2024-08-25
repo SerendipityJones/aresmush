@@ -55,8 +55,6 @@ module AresMUSH
           last_profile_version: char.last_profile_version ? char.last_profile_version.id : nil,
           show_notes: char == enactor || Utils.can_manage_notes?(enactor),
           siteinfo: siteinfo,
-#          rp_prefs: char.rp_prefs,
-#          rp_notes: char.rp_notes,
           custom: CustomCharFields.get_fields_for_viewing(char, enactor),
         }
         
