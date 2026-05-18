@@ -2,7 +2,7 @@ module AresMUSH
   module KeysMagic
     class CharSpellsRequestHandler
       def handle(request)
-        char = Character.find_one_by_name request.args['id')]
+        char = Character.find_one_by_name request.args['id']
         enactor = request.enactor
 
         #  Global.logger.debug "Spells: #{char.spells}"

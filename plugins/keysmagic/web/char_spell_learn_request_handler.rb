@@ -2,10 +2,10 @@ module AresMUSH
   module KeysMagic
     class CharSpellLearnRequestHandler
       def handle(request)
-        char = Character.find_one_by_name request.args['id')]
+        char = Character.find_one_by_name request.args['id']
         enactor = request.enactor
-        spell = request.args['spell')]
-        category = request.args['category')]
+        spell = request.args['spell']
+        category = request.args['category']
 
         if (!char)
           return []
