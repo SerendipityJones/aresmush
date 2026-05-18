@@ -329,23 +329,23 @@ module AresMUSH
 
     def self.determine_web_cast_result(request, enactor)
 
-      if !request.args['pc_spell')].blank?
-        spell_str = request.args['pc_spell')]
-      elsif !request.args['vs_roll1')].blank?
-        spell_str = request.args['vs_roll1')]
-      elsif !request.args['pc_target')].blank?
-        spell_str = request.args['spell_opposed')]
-      elsif !request.args['spell_string')].blank?
-        spell_str = request.args['spell_string')]
+      if !request.args['pc_spell'].blank?
+        spell_str = request.args['pc_spell']
+      elsif !request.args['vs_roll1'].blank?
+        spell_str = request.args['vs_roll1']
+      elsif !request.args['pc_target'].blank?
+        spell_str = request.args['spell_opposed']
+      elsif !request.args['spell_string'].blank?
+        spell_str = request.args['spell_string']
       end
-      vs_roll1 = request.args['vs_roll1')] || ""
-      vs_roll2 = request.args['vs_roll2')] || ""
-      vs_name1 = (request.args['vs_name1')] || "").titlecase
-      vs_name2 = (request.args['vs_name2')] || "").titlecase
-      pc_name = request.args['pc_name')] || ""
-      pc_spell = request.args['pc_spell')] || ""
-      pc_target = request.args['pc_target')] || ""
-      npc_rating =  request.args['npc_rating')] || ""
+      vs_roll1 = request.args['vs_roll1'] || ""
+      vs_roll2 = request.args['vs_roll2'] || ""
+      vs_name1 = (request.args['vs_name1'] || "").titlecase
+      vs_name2 = (request.args['vs_name2'] || "").titlecase
+      pc_name = request.args['pc_name'] || ""
+      pc_spell = request.args['pc_spell'] || ""
+      pc_target = request.args['pc_target'] || ""
+      npc_rating =  request.args['npc_rating'] || ""
       if vs_roll1.is_integer?
         return { error: t('keysmagic.npcs_do_not_know_spells') }
       end
