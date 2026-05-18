@@ -26,7 +26,11 @@ module AresMUSH
       def message_flag(message)
         message.flagged ? "%xr[FLAGGED!] " : ""
       end
-      
+
+      def message(message)
+        message.message.sub(/(\w+) <span class='handle'>(\(@\w+\))<\/span>/, "\\1 \\2")
+      end
+
       
     end
   end

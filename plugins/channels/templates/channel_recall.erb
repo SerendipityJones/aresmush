@@ -1,7 +1,7 @@
 <%= header %>
 <%= title %>
 <% messages.each do |msg| %>
-<%= display_name %> <%= message_flag(msg) %>[<%= timestamp(msg) %>] <%= msg.message %>%xn
+<%= display_name %> <%= message_flag(msg) %>[<%= timestamp(msg) %>] <%= message(msg) %>%xn
 <% end %>
 <%= divider %>
 <%= t('channels.more_on_portal') %>
