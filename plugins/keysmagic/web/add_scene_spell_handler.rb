@@ -2,9 +2,9 @@ module AresMUSH
   module KeysMagic
     class AddSceneSpellRequestHandler
       def handle(request)
-        scene = Scene[request.args['id]')]
+        scene = Scene[request.args['id]']
         enactor = request.enactor
-        sender_name = request.args['sender')]
+        sender_name = request.args['sender']
 
         error = Website.check_login(request)
         return error if error
