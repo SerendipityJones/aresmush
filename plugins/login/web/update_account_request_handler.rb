@@ -3,12 +3,14 @@ module AresMUSH
     class UpdateAccountInfoRequestHandler
       def handle(request)
         enactor = request.enactor
-        name = request.args[:name]
-        email = request.args[:email]
-        timezone = request.args[:timezone]
-        pw = request.args[:confirm_password]
-        unified_play_screen = (request.args[:unified_play_screen] || "").to_bool
-        channel_handles = (request.args[:channel_handles] || "").to_bool
+        name = request.args['name']
+        char_alias = request.args['alias'] || ""
+        email = request.args['email']
+        timezone = request.args['timezone']
+        pw = request.args['confirm_password']
+        unified_play_screen = (request.args['unified_play_screen'] || "").to_bool
+        channel_handles = (request.args['channel_handles'] || "").to_bool
+        editor = request.args['editor'] || "WYSIWYG"
 
         error = Website.check_login(request)
         return error if error
@@ -44,9 +46,24 @@ module AresMUSH
             return { error: timezone_error }
           end
         end
-
+        
+        if (!char_alias.blank?)
+          taken_error = Login.name_taken?(char_alias, enactor)
+          if (taken_error) 
+            return { error: taken_error }
+          end
+          name_validation_msg = Character.check_name(char_alias)
+          if (name_validation_msg) 
+            return { error: name_validation_msg }
+          end
+        end
+        
+        enactor.update(alias: char_alias.blank? ? nil : char_alias)
+        enactor.update(website_editor: editor)
+        
         AresCentral.alts(enactor).each do |alt|
           alt.update(unified_play_screen: unified_play_screen)
+          alt.update(website_editor: editor)
         end
         #add in channel_handles
         enactor.update(channel_handles: channel_handles)
