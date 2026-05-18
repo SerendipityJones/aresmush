@@ -2,7 +2,7 @@ module AresMUSH
   module KeysMagic
     class SpellRequestHandler
       def handle(request)
-        name = KeysMagic.is_spell?(request.args['name].gsub(/[_-')]/," "))
+        name = KeysMagic.is_spell?(request.args['name'].gsub(/[_-]/," "))
         original = KeysMagic.spells[name]
         currentspell = Marshal.load(Marshal.dump(original))
         currentspell['desc']['full'] = Website.format_markdown_for_html(currentspell['desc']['full'])
