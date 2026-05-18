@@ -2,10 +2,10 @@ module AresMUSH
   module KeysMagic
     class CharSpellNoteRequestHandler
       def handle(request)
-        char = Character.find_one_by_name request.args[:id]
+        char = Character.find_one_by_name request.args['id')]
         enactor = request.enactor
-        spell = request.args[:spell]
-        note = request.args[:note]
+        spell = request.args['spell')]
+        note = request.args['note')]
 
         if (!char)
           return []

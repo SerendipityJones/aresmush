@@ -71,8 +71,8 @@ module AresMUSH
       end
 
       def self.txt_recipient(sender, recipient, recipient_names, message, scene_id = nil)
-        client = Login.find_client(sender)
-        recipient_client  = Login.find_client(recipient)
+        client = Login.find_game_client(sender)
+        recipient_client  = Login.find_game_client(recipient)
         Login.emit_if_logged_in recipient, message
         Page.send_afk_message(client, recipient_client, recipient)
       end
