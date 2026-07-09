@@ -10,7 +10,6 @@ module AresMUSH
         pw = request.args['confirm_password']
         unified_play_screen = (request.args['unified_play_screen'] || "").to_bool
         channel_handles = (request.args['channel_handles'] || "").to_bool
-        editor = request.args['editor'] || "WYSIWYG"
 
         error = Website.check_login(request)
         return error if error

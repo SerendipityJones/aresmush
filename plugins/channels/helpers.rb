@@ -91,8 +91,9 @@ module AresMUSH
 
       title = title ? "#{title}%xn" : nil
       channel_message = channel.add_to_history "#{title} #{original_msg}", enactor
-      channel.characters.each do |c|
-        if (!Channels.is_muted?(c, channel)) && !c.has_channel_blocked?(enactor))
+      channel.characters.select { |c| Login.is_online?(c) }.each do |c|
+        next if Channels.is_muted?(c, channel)
+        next if c.has_channel_blocked?(enactor)
           # Set correct name based on whether they want handles showing
           if (c.channel_handles)
             name = enactor.ooc_name
@@ -125,9 +126,14 @@ module AresMUSH
         is_page: false
       }
       
+      web_chars_with_alts_on_chan = Global.client_monitor.web_clients
+                .map { |c| c.char }
+                .uniq
+                .select { |c| c && Channels.has_alt_on_channel?(c, channel) }
+      
       Global.client_monitor.notify_web_clients(:new_chat, "#{data.to_json}", true) do |char|
         char && 
-        Channels.has_alt_on_channel?(char, channel) && 
+        web_chars_with_alts_on_chan.include?(char) &&
         !Channels.is_muted?(char, channel) &&
         !char.has_channel_blocked?(enactor)
       end

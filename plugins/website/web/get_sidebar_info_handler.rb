@@ -62,7 +62,6 @@ module AresMUSH
           allow_web_tour: Login.allow_web_tour?,
           allow_web_registration: Login.allow_web_registration?,
           alts: alt_data,
-          editor: (enactor ? enactor.website_editor : nil) || "WYSIWYG",
           yky: Yky.get_yky_image()         
         }
       end
